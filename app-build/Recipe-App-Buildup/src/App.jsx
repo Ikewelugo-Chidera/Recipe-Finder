@@ -8,7 +8,7 @@ function App() {
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [error, setError] = useState("");
 
-  const handleSearch = async (query) => {
+  async function handleSearch(query) {
     try {
       setError("");
       setSelectedRecipe(null);
@@ -26,19 +26,23 @@ function App() {
       setError("Something went wrong. Please try again.");
       console.error(err);
     }
-  };
+  }
 
-  const handleSelectRecipe = (recipe) => {
+  function handleSelectRecipe(recipe) {
     setSelectedRecipe(recipe);
-  };
+  }
 
-  const handleBack = () => {
+  function handleBack() {
     setSelectedRecipe(null);
-  };
+  }
 
   return (
-    <div className="App">
-      <h1 className="text-3xl font-bold text-center mt-6">Recipe Finder</h1>
+    <div className="App max-w-6xl mx-auto px-4 min-h-screen bg-pink-50">
+      <h1 className="text-4xl font-extrabold text-center mt-6 text-pink-600 drop-shadow-sm">
+        🍓 Recipe Finder
+      </h1>
+
+      {}
       {!selectedRecipe && <SearchBar onSearch={handleSearch} />}
       {error && <p className="text-center text-red-500">{error}</p>}
 

@@ -11,17 +11,17 @@ function SearchBar({ onSearch }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex justify-center my-4">
+    <form onSubmit={handleSubmit} className="flex justify-center mb-6">
       <input
         type="text"
         placeholder="Search for a recipe..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        className="border p-2 rounded-l-md w-64 focus:outline-none"
+        className="border p-2 rounded-l-md w-full sm:w-64 focus:outline-none focus:ring-2 focus:ring-pink-400"
       />
       <button
         type="submit"
-        className="bg-blue-500 text-white px-4 rounded-r-md hover:bg-blue-600 transition"
+        className="bg-pink-500 text-white px-4 py-2 rounded-r-md hover:bg-pink-600 transition"
       >
         Search
       </button>
