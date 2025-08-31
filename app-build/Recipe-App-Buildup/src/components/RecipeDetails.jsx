@@ -1,4 +1,4 @@
-function RecipeDetails({ recipe, onBack }) {
+function RecipeDetails({ recipe, onBack, onToggleFavorite, isFavorite, onAddToShoppingList }) {
   if (!recipe) return null;
 
   const ingredients = [];
@@ -6,15 +6,7 @@ function RecipeDetails({ recipe, onBack }) {
     const ingredient = recipe[`strIngredient${i}`];
     const measure = recipe[`strMeasure${i}`];
     if (ingredient && ingredient.trim() !== "") {
-      ingredients.push(measure ? `${ingredient} - ${measure}` : ingredient);
-    }
-  }
-
-  let youtubeEmbed = null;
-  if (recipe.strYoutube) {
-    const videoId = recipe.strYoutube.split("v=")[1]?.split("&")[0];
-    if (videoId) {
-      youtubeEmbed = `https://www.youtube.com/embed/${videoId}`;
+      ingredients.push(`${ingredient} - ${measure}`);
     }
   }
 
@@ -28,34 +20,51 @@ function RecipeDetails({ recipe, onBack }) {
       </button>
 
       <h2 className="text-2xl font-bold mb-2">{recipe.strMeal}</h2>
-
       <img
         src={recipe.strMealThumb}
         alt={recipe.strMeal}
         className="w-full h-64 object-cover mb-4 rounded"
       />
-
       <p className="mb-2">
-        <strong>Category:</strong> {recipe.strCategory} | <strong>Cuisine:</strong> {recipe.strArea}
+        <strong>Category:</strong> {recipe.strCategory} | <strong>Cuisine:</strong>{" "}
+        {recipe.strArea}
       </p>
 
+      {}
+      <button
+        onClick={() => onToggleFavorite(recipe)}
+        className={`px-4 py-2 rounded mb-4 transition ${
+          isFavorite ? "bg-pink-500 text-white" : "bg-gray-200 text-gray-700"
+        }`}
+      >
+        {isFavorite ? "★ Remove from Favorites" : "☆ Add to Favorites"}
+      </button>
+
       <h3 className="text-xl font-semibold mt-4 mb-2">Ingredients:</h3>
-      <ul className="list-disc list-inside mb-4">
+      <ul className="list-disc list-inside mb-4 space-y-2">
         {ingredients.map((item, index) => (
-          <li key={index}>{item}</li>
+          <li key={index} className="flex justify-between items-center">
+            <span>{item}</span>
+            <button
+              onClick={() => onAddToShoppingList(item)}
+              className="ml-2 bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 transition text-sm"
+            >
+              + Add
+            </button>
+          </li>
         ))}
       </ul>
 
       <h3 className="text-xl font-semibold mt-4 mb-2">Instructions:</h3>
       <p className="mb-4 whitespace-pre-line">{recipe.strInstructions}</p>
 
-      {youtubeEmbed && (
+      {recipe.strYoutube && (
         <div className="mb-4">
           <h3 className="text-xl font-semibold mb-2">Video Tutorial:</h3>
           <iframe
             width="100%"
             height="315"
-            src={youtubeEmbed}
+            src={`https://www.youtube.com/embed/${recipe.strYoutube.split("v=")[1]}`}
             title="YouTube video player"
             frameBorder="0"
             allowFullScreen
