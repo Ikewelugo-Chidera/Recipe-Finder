@@ -5,9 +5,11 @@ function SearchBar({ onSearch }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (query.trim() !== "") {
-      onSearch(query);
-    }
+
+    if (!query.trim()) return;
+
+    onSearch(query);
+
   };
 
   return (
